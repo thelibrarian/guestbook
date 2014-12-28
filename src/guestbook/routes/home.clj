@@ -1,6 +1,7 @@
 (ns guestbook.routes.home
   (:require [compojure.core :refer :all]
-            [guestbook.views.layout :as layout]))
+            [guestbook.views.layout :as layout]
+            [hiccup.form :refer :all]))
 
 (defn home [& [name error message]]
   (layout/common
@@ -9,11 +10,13 @@
     [:p error]
     (show-guests)
     [:hr]
-    [:form
-     [:p "Name:"]
-     [:input]
-     [:p "Message:"]
-     [:textarea {:rows 10 :cols 40}]]))
+    (form-to [:post "/"]
+      [:p "Name:"]
+      (text-field "name" name)
+      [:p "Message:"]
+      (text-area {:rows 10 :cols 40} "message" message)
+      [:br]
+      (submit-button "comment"))))
 
 (defn show-guests []
   [:ul.guests
