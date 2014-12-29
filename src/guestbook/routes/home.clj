@@ -1,13 +1,12 @@
 (ns guestbook.routes.home
   (:require [compojure.core :refer :all]
             [guestbook.views.layout :as layout]
-            [hiccup.form :refer :all]))
+            [hiccup.form :refer :all]
+            [guestbook.models.db :as db]))
 
 (defn show-guests []
   [:ul.guests
-   (for [{:keys [message name timestamp]}
-         [{:message "Hello" :name "Bob" :timestamp nil}
-          {:message "Foo" :name "Bar" :timestamp nil}]]
+   (for [{:keys [message name timestamp]} (db/get-messages)]
      [:li
       [:blockquote message]
       [:p "- " [:cite name]]
@@ -36,7 +35,7 @@
    (home name message "Don't you have something to say?")
    :else
    (do
-     (println name "-" message)
+     (db/save-message name message)
      (home))))
 
 (defroutes home-routes
