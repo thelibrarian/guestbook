@@ -1,6 +1,7 @@
 (defproject guestbook "0.1.0-SNAPSHOT"
   :description "Guestbook Exercise from Web Development with Clojure"
-  :url "http://example.com/FIXME"
+  :url "https://pragprog.com/book/dswdcloj/web-development-with-clojure"
+  :license "The BSD 2-Clause License"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.6"]
                  [hiccup "1.0.5"]
