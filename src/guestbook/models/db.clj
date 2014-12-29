@@ -19,7 +19,7 @@
 (defn get-messages []
   (sql/with-connection db
     (sql/with-query-results res
-      ["select * from guestbook order by timestamp desc"]
+      ["select name, message, datetime(timestamp, 'localtime') as timestamp from guestbook order by timestamp desc"]
       (doall res))))
 
 (defn save-message [name message]
