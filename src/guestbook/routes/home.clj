@@ -13,7 +13,7 @@
       [:p "- " [:cite name]]
       [:time timestamp]])])
 
-(defn home [& [name error message]]
+(defn home [& [name message error]]
   (layout/common
     [:h1 "Guestbook"]
     [:p "Welcome to my guestbook"]
