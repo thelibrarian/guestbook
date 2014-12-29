@@ -15,3 +15,16 @@
      [:name "TEXT"]
      [:message "TEXT"])
     (sql/do-commands "CREATE INDEX timestamp_index ON guestbook (timestamp)")))
+
+(defn get-messages []
+  (sql/with-connection db
+    (sql/with-query-results res
+      ["select * from guestbook order by timestamp desc"]
+      (doall res))))
+
+(defn save-message [name message]
+  (sql/with-connection db
+    (sql/insert-values
+     :guestbook
+     [:name :message]
+     [name message])))
