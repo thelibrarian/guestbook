@@ -5,6 +5,8 @@
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
             [compojure.route :as route]
+            [noir.session :as session]
+            [ring.middleware.session.memory :refer [memory-store]]
             [guestbook.routes.home :refer [home-routes]]
             [guestbook.routes.auth :refer [auth-routes]]
             [guestbook.models.db :as db]))
@@ -24,4 +26,6 @@
 (def app
   (-> (handler/site
        (routes auth-routes home-routes app-routes))
+      (session/wrap-noir-session
+       {:store (memory-store)})
       (wrap-base-url)))
