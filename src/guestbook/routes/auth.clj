@@ -35,4 +35,7 @@
   (GET "/login" [_] (login-page))
   (POST "/login" [id pass]
         (session/put! :user id)
-        (redirect "/")))
+        (redirect "/"))
+  (GET "/logout" []
+       (session/clear!)
+       (redirect "/")))
