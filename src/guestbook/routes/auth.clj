@@ -29,17 +29,19 @@
             (submit-button "login"))))
 
 (defn handle-login [id pass]
-  (cond
-   (empty? id)
-   (login-page "screen name is required.")
-   (empty? pass)
-   (login-page "password is required.")
-   (and (= "foo" id) (= "bar" pass))
-   (do
-     (session/put! :user id)
-     (redirect "/"))
-   :else
-   (login-page "authentication failed.")))
+  (rule (has-value? id)
+        [:id "screen name is required"])
+  (rule (= id "foo")
+        [:id "unknown screen name"])
+  (rule (has-value? pass)
+        [:pass "password is required"])
+  (rule (= pass "bar")
+        [:pass "incorrect password"])
+  (if (errors? :id :pass)
+    (login-page)
+    (do
+      (session/put! :user id)
+      (redirect "/"))))
 
 (defroutes auth-routes
   (GET "/register" [_] (registration-page))
