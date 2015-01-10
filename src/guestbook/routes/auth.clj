@@ -34,19 +34,18 @@
             (submit-button "login"))))
 
 (defn handle-login [id pass]
-  (rule (has-value? id)
-        [:id "screen name is required"])
-  (rule (= id "foo")
-        [:id "unknown screen name"])
-  (rule (has-value? pass)
-        [:pass "password is required"])
-  (rule (= pass "bar")
-        [:pass "incorrect password"])
-  (if (errors? :id :pass)
-    (login-page)
-    (do
-      (session/put! :user id)
-      (redirect "/"))))
+  (let [user (db/get-user id)]
+    (rule (has-value? id)
+          [:id "screen name is required"])
+    (rule (has-value? pass)
+          [:pass "password is required"])
+    (rule (and user (crypt/compare pass (:pass user)))
+          [:pass "incorrect password"])
+    (if (errors? :id :pass)
+      (login-page)
+      (do
+        (session/put! :user id)
+        (redirect "/")))))
 
 (defn handle-registration [id pass pass1]
   (rule (= pass pass1)
