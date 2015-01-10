@@ -4,7 +4,8 @@
             [hiccup.form :refer
              [form-to label text-field password-field submit-button]]
             [noir.response :refer [redirect]]
-            [noir.session :as session]))
+            [noir.session :as session]
+            [noir.validation :refer [rule errors? has-value? on-error]]))
 
 (defn control [field name text]
   (list (label name text)
