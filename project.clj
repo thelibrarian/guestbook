@@ -1,4 +1,4 @@
-(defproject guestbook "0.1.0-SNAPSHOT"
+(defproject guestbook "1.0.0"
   :description "Guestbook Exercise from Web Development with Clojure"
   :url "https://pragprog.com/book/dswdcloj/web-development-with-clojure"
   :license "The BSD 2-Clause License"
