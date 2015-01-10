@@ -43,5 +43,6 @@
 
 (defn get-user [id]
   (sql/with-connection db
-    (sql/with-query-results
-      res ["select * from users where id = ?" id] (first res))))
+    (sql/with-query-results res
+      ["select * from users where id = ?" id]
+      (first res))))
